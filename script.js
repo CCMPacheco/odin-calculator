@@ -29,6 +29,16 @@ equalBtn.addEventListener("click", () => {
   updateDisplay();
 });
 
+clearBtn.addEventListener("click", () => {
+  clear();
+  updateDisplay();
+});
+
+deleteBtn.addEventListener("click", () => {
+  backOne();
+  updateDisplay();
+});
+
 function selectOperation(operation) {
   if (currentOperand === "") return;
   if (previousOperand !== "") {
@@ -89,4 +99,14 @@ function appendNumber(number) {
 function updateDisplay() {
   currentTextElement.innerText = currentOperand;
   previousTextElement.innerText = previousOperand;
+}
+
+function clear() {
+  previousOperand = "";
+  currentOperand = "";
+  selectedOperator = null;
+}
+
+function backOne() {
+  currentOperand = currentOperand.toString().slice(0, -1);
 }
