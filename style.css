@@ -24,6 +24,10 @@ footer {
   font-weight: 500;
 }
 
+button {
+  cursor: pointer;
+}
+
 .main-container {
   width: 400px;
   height: 600px;
@@ -48,7 +52,7 @@ footer {
   padding: 16px;
 }
 
-.result {
+.current {
   font-size: 40px;
 }
 
