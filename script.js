@@ -10,6 +10,31 @@ const equalBtn = document.querySelector("[data-equal]");
 const previousTextElement = document.querySelector("[data-previous-operand]");
 const currentTextElement = document.querySelector("[data-current-operand]");
 
+window.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  console.log(e.key);
+  if ((+e.key >= 0 && +e.key <= 9) || e.key === ".") {
+    appendNumber(e.key);
+    updateDisplay();
+  }
+  if (e.key === "=" || e.key === "Enter") {
+    operate(selectedOperator, previousOperand, currentOperand);
+    updateDisplay();
+  }
+  if (e.key === "/" || e.key === "+" || e.key === "-" || e.key === "*") {
+    selectOperation(convertKey(e.key));
+    updateDisplay();
+  }
+  if (e.key === "Backspace") {
+    backOne();
+    updateDisplay();
+  }
+  if (e.key === "Escape" || e.key === "Delete") {
+    clear();
+    updateDisplay();
+  }
+});
+
 numberBtns.forEach((numberBtn) => {
   numberBtn.addEventListener("click", () => {
     appendNumber(numberBtn.innerText);
@@ -38,6 +63,13 @@ deleteBtn.addEventListener("click", () => {
   backOne();
   updateDisplay();
 });
+
+function convertKey(key) {
+  if (key === "/") return "÷";
+  if (key === "*") return "x";
+  if (key === "-") return "-";
+  if (key === "+") return "+";
+}
 
 function selectOperation(operation) {
   let result;
