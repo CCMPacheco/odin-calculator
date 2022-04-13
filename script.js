@@ -40,10 +40,12 @@ deleteBtn.addEventListener("click", () => {
 });
 
 function selectOperation(operation) {
+  let result;
   if (currentOperand === "") return;
   if (previousOperand !== "") {
-    operate(selectedOperator, previousOperand, currentOperand);
+    result = operate(selectedOperator, previousOperand, currentOperand);
   }
+  if (result === "ERROR") return;
   selectedOperator = operation;
   previousOperand = currentOperand;
   currentOperand = "";
@@ -53,6 +55,10 @@ function operate(operator, firstOperand, secondOperand) {
   let result;
   let prev = parseFloat(firstOperand);
   let current = parseFloat(secondOperand);
+  if (current === 0 && operator === "÷") {
+    alert("UNABLE TO DIVIDE BY ZERO!");
+    return "ERROR";
+  }
   if (isNaN(prev) || isNaN(current)) return;
   switch (operator) {
     case "+":
@@ -76,19 +82,19 @@ function operate(operator, firstOperand, secondOperand) {
 }
 
 function add(firstOperand, secondOperand) {
-  return firstOperand + secondOperand;
+  return Math.round((firstOperand + secondOperand) * 100) / 100;
 }
 
 function subtract(firstOperand, secondOperand) {
-  return firstOperand - secondOperand;
+  return Math.round((firstOperand - secondOperand) * 100) / 100;
 }
 
 function multiply(firstOperand, secondOperand) {
-  return firstOperand * secondOperand;
+  return Math.round(firstOperand * secondOperand * 100) / 100;
 }
 
 function divide(firstOperand, secondOperand) {
-  return firstOperand / secondOperand;
+  return Math.round((firstOperand / secondOperand) * 100) / 100;
 }
 
 function appendNumber(number) {
@@ -98,7 +104,11 @@ function appendNumber(number) {
 
 function updateDisplay() {
   currentTextElement.innerText = currentOperand;
-  previousTextElement.innerText = previousOperand;
+  if (selectedOperator != null) {
+    previousTextElement.innerText = `${previousOperand} ${selectedOperator} `;
+  } else {
+    previousTextElement.innerText = "";
+  }
 }
 
 function clear() {
